@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <cstdlib>
 
-//160
+//albert said 160
 void addBook ();
 void addMem ();
 void modBook ();
@@ -72,16 +72,35 @@ void addBook() {
     
         std :: string allData = bookName + "|" + authorFirstName + "|" + authorLastName + "|" + isbn + "\n";
         //opens the file, then writes the string to it.
-        std :: ofstream bookListData; //object
+        std :: ifstream bookListData; //object
+            int index=0;
             bookListData.open("bookList.txt");
-            int i=0;
-            for(;i!=(bookListData.eof());i++){
-                bookListData.seekp(bookListData.find());
+            
+            if(!bookListData){
+                std :: cout << "Unable to Open File"; //case for not being able to open file
+                exit(1);
             }
-        bookListData << allData;
-        bookListData.close();
+
+             bookListData.seekg (0, bookListData.end); //get total length of file
+             int length = bookListData.tellg();
+             bookListData.seekg (0, bookListData.beg);
+
+             char buffer[length];
+
+             bookListData.read (buffer,length);
+
+             for(int i=0;buffer[i]<length;i++){
+
+             }
+            for(int i=0;buffer[i]< length;i++){
+                if( buffer[i] == '\n'){
+                    index++;
+                    continue;
+                }
+            }
+            std :: cout << "Index of This Book is" << index;
+
         // Work On this Part
-        index++;
     
         std :: cout << "Press ` to Quit\nPress Enter To Add Another Book";
         std :: cin >> c;
