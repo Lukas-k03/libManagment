@@ -21,24 +21,14 @@ class Book{
         authorFirst = _authorFirst;
         authorLast = _authorLast;
     }
-    void addBook (){
-
-    }
-    void addMem (){
-
-    }
     void modBook (){
 
     }
-    void modMem (){
-
-    }
+    
     void delBook (){
 
     }
-    void delMem (){
-
-    }
+    
     void issueBook (){
 
     }
@@ -46,9 +36,60 @@ class Book{
 
     }
 };
+class Member{
+    public:
+        string firstName,lastName;
+        int id;
+    Member(){
+        firstName,lastName = "N/A";
+        id = 0;
+    }
+    Member(string _fN, string _lN){
+        firstName,lastName = "N/A";
+        id = 0;
+    }
+};
+void writebookData(Book &_book){
+    ofstream file;
+    file.open("data.txt");
+    file.write((char*)&_book, sizeof(_book));
+}
+void addBook(){
+   while(true){
+    string bookName,authorFirstName,authorLastName,isbn;
 
-int main (){
+        cout << "Enter Name Of Book:";
+       
+        cin.sync(); //Discards unread characters, makes get line work
+        getline(std :: cin, bookName);  
+       
+        cout << "Enter First Name Of Author:";
+        cin >> authorFirstName;
+        
+        cout << "Enter Last Name Of Author:";
+        cin >> authorLastName;
+       
+        cout << "Enter ISBN:";
+        cin >> isbn;;
+
+
+    Book book1(bookName,authorFirstName,authorLastName);
     
+    writebookData(book1);
+
+    char b;
+    cout << "Type 1 to add another book\nType ` to exit" << endl;
+    cin >> b;
+    if((b) == '`') break;
+   }
+}
+void issueBook ();
+void returnBook ();
+void delMem ();
+void modMem ();
+void addMem ();
+int main (){
+    while(true){
     int userIn;
 
     cout << "What Would You Like To Do?" << endl 
@@ -59,6 +100,27 @@ int main (){
     << endl;
     
     cin >> userIn;
-
+      if(userIn == 9) break;
+      switch(userIn){
+        case 1 : addBook();
+            break;
+      /*  case 2 : addMem();
+            break;
+        case 3 : modBook();
+            break;
+        case 4 : modMem();
+            break;
+        case 5 : delBook();
+            break;
+        case 6 : delMem();
+            break;
+        case 7 : issueBook();
+            break;
+        case 8 : returnBook();
+            break; */
+        default : cout << "Incorrect Input" << endl;
+    }
+    
+    }
 }
 
