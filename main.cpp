@@ -54,6 +54,28 @@ void writebookData(Book &_book){
     file.open("data.txt");
     file.write((char*)&_book, sizeof(_book));
 }
+int readDataForIndex(){
+    ifstream file;
+    file.open("data.txt");
+
+    Book temp;
+    char* buffer[file.gcount()];
+
+    file.read((char*)buffer,file.gcount());
+ 
+    int max = 0;
+ 
+    for(int i = 0;!file.eof();i++) 
+    {
+        if ((int)buffer[i] > max) {
+            max = (int)buffer[i];
+        }
+
+        file.read((char*)buffer, file.gcount());
+    }
+
+    return max;
+} //finish up
 void addBook(){
    while(true){
     string bookName,authorFirstName,authorLastName,isbn;
@@ -72,14 +94,15 @@ void addBook(){
         cout << "Enter ISBN:";
         cin >> isbn;;
 
-
     Book book1(bookName,authorFirstName,authorLastName);
     
     writebookData(book1);
-
+   // book1.index=readDataForIndex();
+    cout << "The Book Index is " << book1.index << endl;
     char b;
     cout << "Type 1 to add another book\nType ` to exit" << endl;
     cin >> b;
+    
     if((b) == '`') break;
    }
 }
@@ -97,7 +120,7 @@ int main (){
     << "3. Modify Book" << endl << "4. Modify Member" 
     << endl << "5. Delete Book" << endl << "6. Delete Member"
     << endl << "7. Issue Book" << endl << "8. Return Book"
-    << endl;
+    << endl << "9. Quit Program";
     
     cin >> userIn;
       if(userIn == 9) break;
