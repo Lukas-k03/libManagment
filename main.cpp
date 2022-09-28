@@ -4,6 +4,12 @@
 #include <iomanip>
 #include <cstdlib>
 using namespace std;
+int readDataForIndex();
+void issueBook ();
+void returnBook ();
+void delMem ();
+void modMem ();
+void addMem ();
 
 class Book{
     public:
@@ -20,6 +26,7 @@ class Book{
         bookName = _bookName;
         authorFirst = _authorFirst;
         authorLast = _authorLast;
+        index = readDataForIndex();
     }
     void modBook (){
 
@@ -54,27 +61,40 @@ void writebookData(Book &_book){
     file.open("data.txt");
     file.write((char*)&_book, sizeof(_book));
 }
-int readDataForIndex(){
-    ifstream file;
-    file.open("data.txt");
-
-    Book temp;
-    char* buffer[file.gcount()];
-
-    file.read((char*)buffer,file.gcount());
- 
+int readDataForIndex(){ //Just Make a seprate counter for each bppk
+    ifstream fileIndex;      //stord in its own file, When index is acessesd read file for highest one
+    fileIndex.open("index.txt");
+   
+    if(!fileIndex.is_open()){
+        cout << "File Not Able To Be Open" << endl;
+        return EXIT_FAILURE;
+    }
+   
+    int buffer[10];
     int max = 0;
- 
-    for(int i = 0;!file.eof();i++) 
-    {
-        if ((int)buffer[i] > max) {
-            max = (int)buffer[i];
-        }
 
-        file.read((char*)buffer, file.gcount());
+    for(int i = 0;!fileIndex.eof();i++) 
+    {
+        fileIndex >> buffer[i];
     }
 
-    return max;
+    for(int i = 0;!fileIndex.eof();i++) 
+    {
+        if ((buffer[i] > max)) {
+            max = buffer[i];
+        }
+    }
+    int i=0;
+    for(;!fileIndex.eof();i++) 
+    {
+        fileIndex >> buffer[i];
+    } 
+  
+    buffer[i+1]=max+1;
+    fileIndex >> buffer[i+1];
+   
+    return max+1;
+    
 } //finish up
 void addBook(){
    while(true){
@@ -106,11 +126,6 @@ void addBook(){
     if((b) == '`') break;
    }
 }
-void issueBook ();
-void returnBook ();
-void delMem ();
-void modMem ();
-void addMem ();
 int main (){
     while(true){
     int userIn;
