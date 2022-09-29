@@ -58,8 +58,19 @@ class Member{
 };
 void writebookData(Book &_book){
     ofstream file;
-    file.open("data.txt");
+    file.open("data.txt", ios::app); //will append the text
     file.write((char*)&_book, sizeof(_book));
+}
+void writeIndexData(int _index){
+    ofstream fileIndex;
+    fileIndex.open("index.txt");
+    
+     if(!fileIndex.is_open()){
+        cout << "File Not Able To Be Open" << endl;
+        exit(EXIT_FAILURE);
+    }
+    
+    fileIndex << _index+1;
 }
 int readDataForIndex(){ //Just Make a seprate counter for each bppk
     ifstream fileIndex;      //stord in its own file, When index is acessesd read file for highest one
@@ -69,33 +80,19 @@ int readDataForIndex(){ //Just Make a seprate counter for each bppk
         cout << "File Not Able To Be Open" << endl;
         return EXIT_FAILURE;
     }
-   
-    int buffer[10];
-    int max = 0;
-
-    for(int i = 0;!fileIndex.eof();i++) 
-    {
-        fileIndex >> buffer[i];
-    }
-
-    for(int i = 0;!fileIndex.eof();i++) 
-    {
-        if ((buffer[i] > max)) {
-            max = buffer[i];
-        }
-    }
-    int i=0;
-    for(;!fileIndex.eof();i++) 
-    {
-        fileIndex >> buffer[i];
-    } 
-  
-    buffer[i+1]=max+1;
-    fileIndex >> buffer[i+1];
-   
-    return max+1;
     
-} //finish up
+    int indexnum=0;
+
+    fileIndex >> indexnum;
+    
+    fileIndex.close();
+    
+    writeIndexData(indexnum);
+    
+    return indexnum;
+
+    
+} //figuire out why indexes are odd
 void addBook(){
    while(true){
     string bookName,authorFirstName,authorLastName,isbn;
@@ -116,8 +113,9 @@ void addBook(){
 
     Book book1(bookName,authorFirstName,authorLastName);
     
+    book1.index=readDataForIndex();
     writebookData(book1);
-   // book1.index=readDataForIndex();
+
     cout << "The Book Index is " << book1.index << endl;
     char b;
     cout << "Type 1 to add another book\nType ` to exit" << endl;
