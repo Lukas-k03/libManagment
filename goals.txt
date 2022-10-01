@@ -1,0 +1,60 @@
+void addBook() {
+    
+    int index,i;
+    char c;
+    std :: string bookName,authorFirstName,authorLastName,isbn;
+  
+    while(true){
+        
+        std :: cout << "Enter Name Of Book:";
+       
+        std :: cin.sync(); //Discards unread characters, makes get line work
+        std :: getline(std :: cin, bookName);  
+       
+        std :: cout << "Enter First Name Of Author:";
+        std :: cin >> authorFirstName;
+        
+        std :: cout << "Enter Last Name Of Author:";
+        std :: cin >> authorLastName;
+       
+        std :: cout << "Enter ISBN:";
+        std :: cin >> isbn;
+    
+        std :: string allData = bookName + "|" + authorFirstName + "|" + authorLastName + "|" + isbn + "\n";
+        //opens the file, then writes the string to it.
+        //
+        std :: ifstream bookListData;
+            int index=0;
+            bookListData.open("bookList.txt");
+            
+            if(!bookListData){
+                std :: cout << "Unable to Open File"; //case for not being able to open file
+                exit(1);
+            }
+
+             bookListData.seekg (0, bookListData.end); //get total length of file
+             int length = bookListData.tellg();
+             bookListData.seekg (0, bookListData.beg);
+
+             char buffer[length];
+
+             bookListData.read (buffer,length);
+
+             for(int i=0;buffer[i]<length;i++){
+
+             }
+            for(int i=0;buffer[i]< length;i++){
+                if( buffer[i] == '\n'){
+                    index++;
+            
+                }
+            }
+            std :: cout << "Index of This Book is" << index;
+
+        // Work On this Part
+    
+        std :: cout << "Press ` to Quit\nPress Enter To Add Another Book";
+        std :: cin >> c;
+        if(c=='`') {break;};
+        
+     }

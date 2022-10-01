@@ -92,7 +92,7 @@ int readDataForIndex(){ //Just Make a seprate counter for each bppk
     return indexnum;
 
     
-} //figuire out why indexes are odd
+}
 void addBook(){
    while(true){
     string bookName,authorFirstName,authorLastName,isbn;
@@ -112,8 +112,6 @@ void addBook(){
         cin >> isbn;;
 
     Book book1(bookName,authorFirstName,authorLastName);
-    
-    book1.index=readDataForIndex();
     writebookData(book1);
 
     cout << "The Book Index is " << book1.index << endl;
