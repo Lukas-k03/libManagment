@@ -58,8 +58,9 @@ class Member{
 };
 void writebookData(Book &_book){
     ofstream file;
-    file.open("data.txt", ios::app); //will append the text
+    file.open("data.txt", ios::app); //ios::app will append the text  to end
     file.write((char*)&_book, sizeof(_book));
+    file.close();
 }
 void writeIndexData(int _index){
     ofstream fileIndex;
@@ -91,7 +92,6 @@ int readDataForIndex(){ //Just Make a seprate counter for each bppk
     
     return indexnum;
 
-    
 }
 void addBook(){
    while(true){
