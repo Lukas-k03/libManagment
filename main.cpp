@@ -56,10 +56,34 @@ class Member{
         id = 0;
     }
 };
+void printList(){
+    ifstream file;
+    string buffer;
+    file.open("data.txt");
+    
+    if(!file.is_open()){
+        cout << "File Not Able To Be Open" << endl;
+        exit(EXIT_FAILURE);
+    }
+   
+    file >> buffer;
+    cout << buffer << endl;
+}
 void writebookData(Book &_book){
     ofstream file;
     file.open("data.txt", ios::app); //ios::app will append the text  to end
-    file.write((char*)&_book, sizeof(_book));
+    
+    string bookN,firstN,lastN,ISBN,index,input;
+    
+    bookN=_book.bookName;
+    firstN=_book.authorFirst;
+    lastN=_book.authorLast;
+    index = to_string(_book.index);
+
+    input = bookN + " |" + firstN + " |" + lastN + " |" + ISBN + " |" + index + "\n";
+
+    file << input;
+  
     file.close();
 }
 void writeIndexData(int _index){
@@ -73,6 +97,7 @@ void writeIndexData(int _index){
     
     fileIndex << _index+1;
 }
+
 int readDataForIndex(){ //Just Make a seprate counter for each bppk
     ifstream fileIndex;      //stord in its own file, When index is acessesd read file for highest one
     fileIndex.open("index.txt");
@@ -93,6 +118,7 @@ int readDataForIndex(){ //Just Make a seprate counter for each bppk
     return indexnum;
 
 }
+
 void addBook(){
    while(true){
     string bookName,authorFirstName,authorLastName,isbn;
@@ -122,6 +148,7 @@ void addBook(){
     if((b) == '`') break;
    }
 }
+
 int main (){
     while(true){
     int userIn;
@@ -134,7 +161,7 @@ int main (){
     << endl << "9.Show Book List"<< endl << "10. Quit Program";
     
     cin >> userIn;
-      if(userIn == 9) break;
+      if(userIn == 10) break;
       switch(userIn){
         case 1 : addBook();
             break;
@@ -152,6 +179,8 @@ int main (){
             break;
         case 8 : returnBook();
             break; */
+        case 9 : printList();
+            break;
         default : cout << "Incorrect Input" << endl;
     }
     
