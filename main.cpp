@@ -131,7 +131,7 @@ int main (){
     << "3. Modify Book" << endl << "4. Modify Member" 
     << endl << "5. Delete Book" << endl << "6. Delete Member"
     << endl << "7. Issue Book" << endl << "8. Return Book"
-    << endl << "9. Quit Program";
+    << endl << "9.Show Book List"<< endl << "10. Quit Program";
     
     cin >> userIn;
       if(userIn == 9) break;
