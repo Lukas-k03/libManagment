@@ -55,8 +55,9 @@ void writebookData(Book _book){
     index = to_string(_book.index);
 
     const string input[5] = {_book.bookName,_book.authorFirst,_book.authorLast,to_string(_book.index)};
-
-    for(int i=0; i<5;i++){
+    
+    file << fixed << left << setw(30) << input[0] << "|";
+    for(int i=1; i<3;i++){
         file << fixed << left << setw(15) << input[i] << "|";
    }
     file << endl;
