@@ -65,9 +65,12 @@ void printList(){
         cout << "File Not Able To Be Open" << endl;
         exit(EXIT_FAILURE);
     }
-   
+
     file >> buffer;
-    cout << buffer << endl;
+    cout << buffer;
+
+    file.close();
+
 }
 void writebookData(Book &_book){
     ofstream file;
