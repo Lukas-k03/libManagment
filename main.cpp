@@ -3,6 +3,8 @@
 #include <string>
 #include <iomanip>
 #include <cstdlib>
+#include "book.h"
+
 using namespace std;
 int readDataForIndex();
 void issueBook ();
@@ -11,38 +13,6 @@ void delMem ();
 void modMem ();
 void addMem ();
 
-class Book{
-    public:
-        string bookName,authorFirst,authorLast;
-        int index,quantity;
-    Book(){
-        bookName="N/A";
-        authorFirst = "N/A";
-        authorLast = "N/A";
-        index = 0;
-        quantity =0;
-    }
-    Book(string _bookName,string _authorFirst,string _authorLast){
-        bookName = _bookName;
-        authorFirst = _authorFirst;
-        authorLast = _authorLast;
-        index = readDataForIndex();
-    }
-    void modBook (){
-
-    }
-    
-    void delBook (){
-
-    }
-    
-    void issueBook (){
-
-    }
-    void returnBook (){
-
-    }
-};
 class Member{
     public:
         string firstName,lastName;
@@ -58,35 +28,38 @@ class Member{
 };
 void printList(){
     ifstream file;
-    string buffer;
+    char buffer[2000];
     file.open("data.txt");
     
     if(!file.is_open()){
         cout << "File Not Able To Be Open" << endl;
         exit(EXIT_FAILURE);
     }
-
-    file >> buffer;
+    
+    file.read((char*)buffer,2000);
     cout << buffer;
 
     file.close();
 
 }
-void writebookData(Book &_book){
+
+void writebookData(Book _book){
     ofstream file;
     file.open("data.txt", ios::app); //ios::app will append the text  to end
     
-    string bookN,firstN,lastN,ISBN,index,input;
+    string bookN,firstN,lastN,index;
     
     bookN=_book.bookName;
     firstN=_book.authorFirst;
     lastN=_book.authorLast;
     index = to_string(_book.index);
 
-    input = bookN + " |" + firstN + " |" + lastN + " |" + ISBN + " |" + index + "\n";
+    const string input[5] = {_book.bookName,_book.authorFirst,_book.authorLast,to_string(_book.index)};
 
-    file << input;
-  
+    for(int i=0; i<5;i++){
+        file << fixed << left << setw(15) << input[i] << "|";
+   }
+    file << endl;
     file.close();
 }
 void writeIndexData(int _index){
@@ -136,11 +109,8 @@ void addBook(){
         
         cout << "Enter Last Name Of Author:";
         cin >> authorLastName;
-       
-        cout << "Enter ISBN:";
-        cin >> isbn;;
 
-    Book book1(bookName,authorFirstName,authorLastName);
+    Book book1(bookName,authorFirstName,authorLastName,readDataForIndex());
     writebookData(book1);
 
     cout << "The Book Index is " << book1.index << endl;
