@@ -63,7 +63,7 @@ void writebookData(Book _book){
     file << endl;
     file.close();
 }
-void writeIndexData(int _index){
+void writeIndexData(int _index){ //Make part of book class usign static
     ofstream fileIndex;
     fileIndex.open("index.txt");
     
